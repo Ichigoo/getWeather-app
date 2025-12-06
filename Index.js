@@ -4,13 +4,17 @@ import {
 import {
     parseWeatherData
 } from './lib/data-parser.js';
+import 'dotenv/config';
 
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 async function getWeatherInfo(input) {
     if (!input || typeof input !== 'string' || input.trim() === '') {
         throw new Error("Input must be a non-empty string (City or Country name).");
     }
-
+    if (!API_KEY) {
+        throw new Error("API Key is missing. Check your .env file.");
+    }
     const location = input.trim();
 
     // Try City 
