@@ -19,7 +19,7 @@ async function getWeatherInfo(input) {
 
     // Try City 
     try {
-        const rawData = await fetchWeatherByCity(location);
+        const rawData = await fetchWeatherByCity(location, API_KEY);
 
         console.log("after fetch")
 
@@ -29,7 +29,9 @@ async function getWeatherInfo(input) {
         return cleanData;
 
     } catch (error) {
-
+        if (error.message.toLowerCase().includes('network error')) {
+            throw error;
+        }
         throw new Error(`Location not found: Could not find city or country "${location}".`);
     }
 }
